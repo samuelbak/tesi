@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.lynden.gmapsfx.*?>
+<?import com.lynden.gmapsfx.GoogleMapView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.141" fx:controller="gui.MainWindowController">
-   <children>
-      <GoogleMapView fx:id="mapView" prefHeight="750.0" prefWidth="761.0"  />
-   </children>
-</AnchorPane>
+<BorderPane prefHeight="790.0" prefWidth="1034.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MainWindowController">
+   <center>
+      <AnchorPane>
+         <children>
+            <GoogleMapView fx:id="mapView" prefHeight="750.0" prefWidth="761.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+         </children>
+      </AnchorPane>
+   </center>
+   <bottom>
+      <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <items>
+            <Label fx:id="connLabel" text="Looking for server..." />
+         </items>
+      </ToolBar>
+   </bottom>
+</BorderPane>

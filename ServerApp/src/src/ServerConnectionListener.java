@@ -16,7 +16,7 @@ public class ServerConnectionListener implements Runnable {
 	
 	public ServerConnectionListener(Integer port) {
 		this.port = port;
-		t = new Thread(this);
+		t = new Thread(this, "Connection listener");
 		t.setDaemon(true);
 		t.start();
 	}
@@ -30,12 +30,14 @@ public class ServerConnectionListener implements Runnable {
 			System.out.println("can't create server socket");
 			e.printStackTrace();
 		}
-		try {
-			new ConnectionHandler(ss.accept());
-		} catch (IOException e) {
-			// TODO logging
-			System.out.println("can't accept connection");
-			e.printStackTrace();
+		while(1<2) {
+			try {
+				new ConnectionHandler(ss.accept());
+			} catch (IOException e) {
+				// TODO logging
+				System.out.println("can't accept connection");
+				e.printStackTrace();
+			}
 		}
 	}
 

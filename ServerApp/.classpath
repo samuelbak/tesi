@@ -2,7 +2,6 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="miglayout15-swing.jar" sourcepath="miglayout-src.zip"/>
 	<classpathentry kind="lib" path="lib/GMapsFX-2.12.0.jar" sourcepath="lib/GMapsFX-GMapsFX-2.12.0.zip">
 		<attributes>
 			<attribute name="javadoc_location" value="http://rterp.github.io/GMapsFX/apidocs/"/>

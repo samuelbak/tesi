@@ -15,6 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import src.ServerConnectionListener;
+import util.Global;
 
 public class MainWindowController implements Initializable, MapComponentInitializedListener{
 	
@@ -23,15 +24,11 @@ public class MainWindowController implements Initializable, MapComponentInitiali
 	@FXML
 	private Label connLabel;
 	@FXML
-	private ListView clientListView;
+	private ListView<String> clientListView;
 	
     
-    public static GoogleMap map;
+    private GoogleMap map;
 
-	
-	public void appStart() {
-		new ServerConnectionListener(12345);
-	}
 
 	@Override
 	public void mapInitialized() {
@@ -47,11 +44,15 @@ public class MainWindowController implements Initializable, MapComponentInitiali
                 .zoomControl(false)
                 .zoom(12);
                    
-        map = mapView.createMap(mapOptions);	
+        map = mapView.createMap(mapOptions);
+        Global.map = map;
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		Global.connLabel = connLabel;
+		Global.clientListView = clientListView;
+		
 		mapView.addMapInializedListener(this);
 	}
 }
