@@ -12,12 +12,19 @@ import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import src.ServerConnectionListener;
 
 public class MainWindowController implements Initializable, MapComponentInitializedListener{
 	
 	@FXML
     private GoogleMapView mapView;
+	@FXML
+	private Label connLabel;
+	@FXML
+	private ListView clientListView;
+	
     
     public static GoogleMap map;
 
@@ -47,5 +54,4 @@ public class MainWindowController implements Initializable, MapComponentInitiali
 	public void initialize(URL location, ResourceBundle resources) {
 		mapView.addMapInializedListener(this);
 	}
-
 }

@@ -22,6 +22,7 @@ public class ClientApp extends Application{
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			primaryStage.setOnCloseRequest(e -> Platform.exit());
+			primaryStage.setTitle("Client app");
 			initializeApp();
 		} catch(Exception e) {
 			e.printStackTrace();

@@ -18,6 +18,7 @@ public class ConnectionHandler implements Runnable {
 	public ConnectionHandler(Socket connection) {
 		this.conn = connection;
 		t = new Thread(this);
+		t.setDaemon(true);
 		t.start();
 	}
 	

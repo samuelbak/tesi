@@ -23,6 +23,7 @@ public class ConnectionHandler implements Runnable{
 		this.hostname = hostname;
 		this.port = port;
 		t = new Thread(this);
+		t.setDaemon(true);
 		t.start();
 	}
 	

@@ -2,6 +2,8 @@ package src;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 
 public class ServerConnectionListener implements Runnable {
 
@@ -9,9 +11,13 @@ public class ServerConnectionListener implements Runnable {
 	private ServerSocket ss;
 	public Thread t;
 	
+	@FXML
+	private Label connLabel;
+	
 	public ServerConnectionListener(Integer port) {
 		this.port = port;
 		t = new Thread(this);
+		t.setDaemon(true);
 		t.start();
 	}
 	
