@@ -1,5 +1,8 @@
 package src;
 
+import java.util.LinkedList;
+import java.util.concurrent.ArrayBlockingQueue;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -22,7 +25,7 @@ public class ClientApp extends Application{
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		try {
-			BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("../gui/MainWindow.fxml"));
+			BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("/gui/MainWindow.fxml"));
 			Scene scene = new Scene(root, 400, 400);
 			primaryStage.setScene(scene);
 			primaryStage.show();
@@ -35,6 +38,10 @@ public class ClientApp extends Application{
 	}
 	
 	private void initializeApp() {
-		new ConnectionHandler("localhost", 12345);
+		Global.sendQueue = new ArrayBlockingQueue<>(50);
+		Global.clientCollection = new LinkedList<>();
+		Global.workCollection = new LinkedList<>();
+		new ConnectionHandler("localhost", 12345, Global.sendQueue);
+		new DataCollector(Global.sendQueue);
 	}
 }

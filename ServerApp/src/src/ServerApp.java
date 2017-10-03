@@ -18,7 +18,7 @@ public class ServerApp extends Application{
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		try {
-			BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("../gui/MainWindow.fxml"));
+			BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("/gui/MainWindow.fxml"));
 			Scene scene = new Scene(root, 400, 400);
 			primaryStage.setScene(scene);
 			primaryStage.show();

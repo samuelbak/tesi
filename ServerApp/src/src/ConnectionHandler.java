@@ -10,12 +10,10 @@ import com.lynden.gmapsfx.javascript.object.LatLong;
 import com.lynden.gmapsfx.javascript.object.Marker;
 import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 
-import gui.MainWindowController;
 import javafx.application.Platform;
-import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import util.Global;
 import util.Telegram;
+import util.Vehicle;
 
 public class ConnectionHandler implements Runnable {
 
@@ -37,25 +35,16 @@ public class ConnectionHandler implements Runnable {
 	public void run() {
 		try {
 			out = new ObjectOutputStream(conn.getOutputStream());
-		} catch (IOException e) {
-			// TODO
-			System.out.println("can't get output stream");
-			e.printStackTrace();
-			
-		}
-		try {
 			in 	= new ObjectInputStream(conn.getInputStream());
 		} catch (IOException e) {
-			// TODO 
-			System.out.println("can't get input stream");
-			e.printStackTrace();
+			System.out.println("can't get streams");
+			e.printStackTrace();			
 		}
 		while(1<2) {
 			Telegram msg = null;
 			try {
 				msg = (Telegram)in.readObject();
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
 				System.out.println("can't find class");
 				e.printStackTrace();
 				break;
@@ -63,7 +52,6 @@ public class ConnectionHandler implements Runnable {
 				System.out.println("connection reset");
 				break;
 			}catch (IOException e) {
-				// TODO Auto-generated catch block
 				System.out.println("can't read input object");
 				e.printStackTrace();
 				break;
@@ -72,6 +60,14 @@ public class ConnectionHandler implements Runnable {
 			Double lat = msg.latitude;
 			Double lon = msg.longitude;
 			System.out.println(message);
+			Telegram send = new Telegram();
+			send.id=3;
+			try {
+				out.writeObject(send);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			//update ui
 			Platform.runLater(new Runnable() {
 	            public void run() {
@@ -92,5 +88,24 @@ public class ConnectionHandler implements Runnable {
 			System.out.println("can't close connection");
 			e.printStackTrace();
 		}
+	}
+}
+
+class SenderHandler implements Runnable{
+
+	protected Thread t;
+	
+	private ObjectInputStream in;
+	
+	public SenderHandler(ObjectInputStream in) {
+		this.in = in;
+		t = new Thread(this, "Receiver handle");
+		t.setDaemon(true);
+		t.start();
+	}
+	
+	@Override
+	public void run() {
+		
 	}
 }

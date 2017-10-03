@@ -44,12 +44,13 @@ public class MainWindowController implements Initializable, MapComponentInitiali
                 .zoomControl(false)
                 .zoom(12);
                    
-        map = mapView.createMap(mapOptions);	
+        map = mapView.createMap(mapOptions);
+        Global.map = map;
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		Global.connLabel = connLabel;
+		Global.connLabel = connLabel;		
 		mapView.addMapInializedListener(this);
 	}
 

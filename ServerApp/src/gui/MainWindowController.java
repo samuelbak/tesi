@@ -14,7 +14,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import src.ServerConnectionListener;
 import util.Global;
 
 public class MainWindowController implements Initializable, MapComponentInitializedListener{
@@ -54,5 +53,13 @@ public class MainWindowController implements Initializable, MapComponentInitiali
 		Global.clientListView = clientListView;
 		
 		mapView.addMapInializedListener(this);
+	}
+	
+	public void sendClientPos() {
+		
+	}
+	
+	public void sendWorkPos() {
+		
 	}
 }
