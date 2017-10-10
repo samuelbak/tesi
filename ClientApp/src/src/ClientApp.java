@@ -15,11 +15,27 @@ import util.Global;
 public class ClientApp extends Application{
 
 	public static void main(String[] args) {
+		boolean gui = true;
 		for (int i=0; i<args.length; i++) {
-			if (args[i].equals("-c"))
-				Global.clientName = args[i+1];
+			switch(args[i]) {
+				case ("-c"):
+					Global.clientName = args[i+1];
+				break;
+				case ("-h"):
+					Global.hostname = args[i+1];
+				break;
+				case ("-p"):
+					Global.port = Integer.parseInt(args[i+1]);
+				break;
+				case ("--no-gui"):
+					gui = false;
+				break;
+			}
 		}
-		launch(args);
+		if (gui)
+			launch(args);
+		else
+			initializeApp();
 	}
 	
 	@Override
@@ -37,11 +53,11 @@ public class ClientApp extends Application{
 		}
 	}
 	
-	private void initializeApp() {
+	private static void initializeApp() {
 		Global.sendQueue = new ArrayBlockingQueue<>(50);
 		Global.clientCollection = new LinkedList<>();
 		Global.workCollection = new LinkedList<>();
-		new ConnectionHandler("localhost", 12345, Global.sendQueue);
+		new ConnectionHandler(Global.hostname, Global.port, Global.sendQueue);
 		new DataCollector(Global.sendQueue);
 	}
 }

@@ -54,7 +54,7 @@ public class ConnectionHandler implements Runnable{
 				if (conn!=null)
 					break;
 			}
-			new ReceiverHandler(in);
+			//new ReceiverHandler(in);
 			while(1<2) {
 				Platform.runLater(new Runnable() {
 					public void run() {

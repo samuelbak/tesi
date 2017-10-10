@@ -11,9 +11,9 @@ import com.lynden.gmapsfx.javascript.object.Marker;
 import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 
 import javafx.application.Platform;
+import util.Client;
 import util.Global;
 import util.Telegram;
-import util.Vehicle;
 
 public class ConnectionHandler implements Runnable {
 
@@ -57,9 +57,11 @@ public class ConnectionHandler implements Runnable {
 				break;
 			}
 			String message = "lat: " + msg.latitude + " lon: " +msg.longitude + "from: "+ msg.clientName + " " + conn.getInetAddress()+":"+conn.getPort();
+			String clientName = msg.clientName;
 			Double lat = msg.latitude;
 			Double lon = msg.longitude;
 			System.out.println(message);
+			/*
 			Telegram send = new Telegram();
 			send.id=3;
 			try {
@@ -68,7 +70,9 @@ public class ConnectionHandler implements Runnable {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			*/
 			//update ui
+			/*
 			Platform.runLater(new Runnable() {
 	            public void run() {
 	            	Global.connLabel.setText("Connected");
@@ -76,17 +80,55 @@ public class ConnectionHandler implements Runnable {
 	            	MarkerOptions markOpt = new MarkerOptions();
 	            	markOpt.position(pos);
 	            	Marker mark = new Marker(markOpt);
+	            	mark.setTitle("aa");
 	            	if(Global.map != null)
 	            		Global.map.addMarker(mark);
 	            }
 	        });
-		}
-		try {
-			conn.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			System.out.println("can't close connection");
-			e.printStackTrace();
+			*/
+			Platform.runLater(new Runnable() {
+	            public void run() {
+	            	Global.connLabel.setText("Connected");
+	            }
+	        });
+			
+        	Integer listPosition = Global.getClientIndex(msg.clientName);
+        	Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					if (listPosition > -1) {
+		        		Global.clients.get(listPosition).prevPosition = Global.clients.get(listPosition).position;
+		        		Global.clients.get(listPosition).prevMarkerOptions = Global.clients.get(listPosition).markerOptions;
+		        		Global.clients.get(listPosition).prevMarker = Global.clients.get(listPosition).marker;
+		        		
+		        		Global.clients.get(listPosition).position = new LatLong(lat, lon);
+		        		Global.clients.get(listPosition).markerOptions = new MarkerOptions();
+		        		Global.clients.get(listPosition).markerOptions.position(Global.clients.get(listPosition).position);
+		        		Global.clients.get(listPosition).marker = new Marker(Global.clients.get(listPosition).markerOptions);
+		        		Global.clients.get(listPosition).updateFlag = true;
+		        	} else {
+		    			Client client = new Client();
+		    			client.clientName = clientName;
+		    			client.updateFlag = true;
+		        		client.position = new LatLong(lat, lon);
+		        		client.markerOptions = new MarkerOptions();
+		            	client.markerOptions.position(client.position);
+		            	client.marker = new Marker(client.markerOptions);
+		            	Global.clients.add(client);
+		        	}
+				}
+			});
+        	
+        	/*
+			try {
+				conn.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				System.out.println("can't close connection");
+				e.printStackTrace();
+			}
+			*/
 		}
 	}
 }

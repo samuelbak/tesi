@@ -1,16 +1,26 @@
 package src;
 
+import java.util.LinkedList;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import util.Global;
 
 
 public class ServerApp extends Application{
 
 	public static void main(String[] args) {
+		for (int i=0; i<args.length; i++) {
+			switch(args[i]) {
+				case ("-p"):
+					Global.port = Integer.parseInt(args[i+1]);
+				break;
+			}
+		}
 		initializeApp();
 		launch(args);
 	}
@@ -30,6 +40,7 @@ public class ServerApp extends Application{
 	}
 	
 	private static void initializeApp() {
-		new ServerConnectionListener(12345);
+		Global.clients = new LinkedList<>();
+		new ServerConnectionListener(Global.port);
 	}
 }

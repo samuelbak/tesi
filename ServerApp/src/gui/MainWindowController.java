@@ -2,6 +2,7 @@ package gui;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
 
 import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
@@ -27,6 +28,7 @@ public class MainWindowController implements Initializable, MapComponentInitiali
 	
     
     private GoogleMap map;
+    private Thread mapUpdaterService;
 
 
 	@Override
@@ -45,6 +47,10 @@ public class MainWindowController implements Initializable, MapComponentInitiali
                    
         map = mapView.createMap(mapOptions);
         Global.map = map;
+        
+        mapUpdaterService = new Thread(new MapUpdaterService());
+        mapUpdaterService.setDaemon(true);
+        mapUpdaterService.start();
 	}
 
 	@Override
